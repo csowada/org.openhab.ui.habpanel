@@ -140,7 +140,7 @@
                             var newstate = payload.value;
                             var item = $filter('filter')($rootScope.items, {name: topicparts[2]}, true)[0];
                             if (item && item.state !== payload.value) {
-                                $rootScope.$apply(function () {
+                                //$rootScope.$apply(function () {
                                     console.log("Updating " + item.name + " state from " + item.state + " to " + payload.value);
                                     item.state = payload.value;
                                     $rootScope.$emit('openhab-update', item);
@@ -154,7 +154,7 @@
                                         $location.url('/view/' + item.state);
                                     }
 
-                                });
+                                //});
                             }
                         } else if (evtdata.topic === "smarthome/webaudio/playurl") {
                             var context, audioBuffer;

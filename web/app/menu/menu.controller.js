@@ -20,6 +20,7 @@
         function activate() {
             var tick = function () {
                 vm.clock = Date.now();
+                //$scope.$digest();
             }
             $interval(tick, 1000);
             if ($rootScope.settings.no_scrolling) iNoBounce.enable(); else iNoBounce.disable();

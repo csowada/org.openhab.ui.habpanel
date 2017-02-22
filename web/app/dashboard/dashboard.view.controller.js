@@ -32,7 +32,7 @@
         // for sliders
         $timeout(function () {
             $scope.$broadcast('rzSliderForceRender');
-        });
+        }, 0, false);
     });
 
     activate();
