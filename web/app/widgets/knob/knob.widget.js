@@ -153,8 +153,12 @@
 
         }
 
-        OHService.onUpdate($scope, vm.widget.item, function () {
-            updateValue();
+        OHService.onUpdate($scope, vm.widget.item, function (event, item) {
+            if(item == null || item.name == vm.widget.item) {
+                updateValue();
+                if(item != null)
+                    $scope.$digest();
+            }
         });
 
     }
