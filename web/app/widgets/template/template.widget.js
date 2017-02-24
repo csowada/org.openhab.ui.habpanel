@@ -39,7 +39,7 @@
                                 : scope.ngModel.template;
 
                 scope.config = scope.ngModel.config;
-
+                
                 if (scope.ngModel.nobackground) {
                     element[0].parentElement.parentElement.className += " no-bkg";
                 }
@@ -53,6 +53,27 @@
                 element.html(template);
 
                 $compile(element.contents())(scope);
+            }
+
+            function computeItemNames() {
+
+                // load custom widget config
+                var config = $rootScope.customwidgets[scope.ngModel.customwidget];
+
+                //reset
+                scope.itemNames = [];
+
+                angular.forEach(config.settings, function (setting) {
+
+                    if(setting.type == "item") {
+                        var itemName = scope.ngModel.config[setting.id];
+
+                        if(scope.itemNames.indexOf(itemName) == -1) {
+                            scope.itemNames.push(itemName);
+                        }
+                        
+                    }
+                });
             }
 
             scope.getItem = function(itemname) {
@@ -100,9 +121,28 @@
             }
 
             scope.$on("refreshTemplate", function () {
+                computeItemNames();
                 render();
             });
 
+            OHService.onUpdate(scope, '', function (event, item) {
+
+                if(item != null) {
+
+                    // if items in settings used
+                    if(scope.itemNames && scope.itemNames.length > 0) {
+                        if(scope.itemNames.indexOf(item.name) != -1) {
+                            scope.$digest();
+                        }
+                        
+                    // refresh on every event
+                    } else {
+                        scope.$digest();
+                    }
+                }
+            });
+
+            computeItemNames();
             render();
         }
     }
