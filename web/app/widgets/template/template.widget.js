@@ -63,17 +63,20 @@
                 //reset
                 scope.itemNames = [];
 
-                angular.forEach(config.settings, function (setting) {
+                if(config && config.settings) {
+                    angular.forEach(config.settings, function (setting) {
 
-                    if(setting.type == "item") {
-                        var itemName = scope.ngModel.config[setting.id];
+                        if(setting.type == "item") {
+                            var itemName = scope.ngModel.config[setting.id];
 
-                        if(scope.itemNames.indexOf(itemName) == -1) {
-                            scope.itemNames.push(itemName);
+                            if(scope.itemNames.indexOf(itemName) == -1) {
+                                scope.itemNames.push(itemName);
+                            }
+                            
                         }
-                        
-                    }
-                });
+                    });
+                }
+
             }
 
             scope.getItem = function(itemname) {
